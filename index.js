@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 const { initializeServer } = require("./server/index");
 const connectDB = require("./database/index");
 
