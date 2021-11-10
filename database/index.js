@@ -1,4 +1,4 @@
-const debug = require("debug")("seriesco:database");
+const debug = require("debug")("series:database");
 const chalk = require("chalk");
 const mongoose = require("mongoose");
 
