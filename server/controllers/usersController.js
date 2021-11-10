@@ -1,8 +1,16 @@
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 const User = require("../../database/models/user");
 
 const createUser = async (req, res, next) => {
+  const { username, password, admin } = req.body;
   try {
-    const newUser = await User.create(req.body);
+    const newUser = await User.create({
+      username,
+      password: await bcrypt.hash(password, 10),
+      admin,
+    });
     res.status(201).json(newUser);
   } catch {
     const error = new Error("Error creating the user");
@@ -10,7 +18,7 @@ const createUser = async (req, res, next) => {
   }
 };
 
-const loginUser = (req, res, next) => {
+const loginUser = async (req, res, next) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
   if (!user) {
