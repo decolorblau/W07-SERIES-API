@@ -8,7 +8,7 @@ const {
   notFoundErrorHandler,
   generalErrorHandler,
 } = require("./middlewares/errors");
-const auth = require("./middleware/auth");
+// const auth = require("./middlewares/auth");
 
 const app = express();
 app.use(cors());
@@ -20,7 +20,7 @@ const initializeServer = (port) =>
       debug(chalk.yellow(`Listening ${port} port`));
       resolve(server);
     });
-    server.on("erro", (error) => {
+    server.on("error", (error) => {
       debug(chalk.red("There was an error starting the server."));
       if (error.code === "EADDRINUSE") {
         debug(chalk.red(`The port ${port} is in use.`));
@@ -35,8 +35,8 @@ const initializeServer = (port) =>
 app.use(morgan("dev"));
 
 app.use("/users", usersRoutes);
-app.use("/platforms", auth, usersRoutes);
-app.use("/series", auth, usersRoutes);
+// app.use("/platforms", auth, usersRoutes);
+// app.use("/series", auth, usersRoutes);
 
 app.use(notFoundErrorHandler);
 app.use(generalErrorHandler);

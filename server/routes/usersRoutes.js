@@ -6,7 +6,7 @@ const usersSchema = require("../schemas/userSchema");
 
 const router = express.Router();
 
-router.post("/users", validate(usersSchema), createUser);
-router.post("/users", validate(usersSchema), loginUser);
+router.post("/login", validate(usersSchema), loginUser);
+router.post("/register", validate(usersSchema), createUser);
 
 module.exports = router;
