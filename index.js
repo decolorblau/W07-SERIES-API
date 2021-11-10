@@ -7,7 +7,7 @@ const PORT = process.env.PORT ?? 5000;
 
 (async () => {
   try {
-    await connectDB(process.env.DB_STRING_TEST);
+    await connectDB(process.env.DB_STRING);
     await initializeServer(PORT);
   } catch (error) {
     process.exit(1);

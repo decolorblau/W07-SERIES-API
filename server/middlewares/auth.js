@@ -14,8 +14,11 @@ const checkAuthorization = (req, res, next) => {
       next(error);
     } else {
       try {
-        const { name, id } = jwt.verify(token, process.env.JWT_SECRET);
-        req.userData = { name, id };
+        const { id, username, admin } = jwt.verify(
+          token,
+          process.env.JWT_SECRET
+        );
+        req.userData = { id, username, admin };
         next();
       } catch {
         const error = new Error("Unauthorized.");
