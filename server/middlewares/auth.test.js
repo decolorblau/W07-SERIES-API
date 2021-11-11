@@ -5,23 +5,23 @@ jest.mock("jsonwebtoken");
 
 describe("Given a checkAuthorization function", () => {
   describe("When it receives an Unauthorization request", () => {
-    test("Then it should return error code 401 and Unauthorized message", async () => {
+    test("Then it should return error code 401 and Unauthorized message", () => {
       const req = {
         header: jest.fn(),
       };
       const error = new Error("Unauthorized.");
-      error.code = 402;
+      error.code = 401;
       const next = jest.fn();
 
-      await checkAuthorization(req, null, next);
+      checkAuthorization(req, null, next);
 
-      expect(next).toBeCalledWith(error);
+      expect(next).toHaveBeenCalledWith(error);
       expect(next.mock.calls[0][0]).toHaveProperty("message", error.message);
       expect(next.mock.calls[0][0]).toHaveProperty("code", error.code);
     });
   });
   describe("When it receives a Authorization request without token ", () => {
-    test("Then it should return error code 401 and Unauthorized message", async () => {
+    test("Then it should return error code 401 and Unauthorized message", () => {
       const req = {
         header: jest.fn().mockReturnValue("1"),
       };
@@ -30,7 +30,7 @@ describe("Given a checkAuthorization function", () => {
       error.code = 401;
       const next = jest.fn();
 
-      await checkAuthorization(req, null, next);
+      checkAuthorization(req, null, next);
 
       expect(next).toHaveBeenCalledWith(error);
       expect(next.mock.calls[0][0]).toHaveProperty("message", error.message);

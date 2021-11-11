@@ -23,7 +23,7 @@ const checkAuthorization = (req, res, next) => {
         next();
       } catch {
         const error = new Error("Unauthorized.");
-        error.code = 401;
+        error.code = 500;
         next(error);
       }
     }

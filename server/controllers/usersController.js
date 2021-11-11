@@ -29,7 +29,7 @@ const loginUser = async (req, res, next) => {
     const rightPassword = await bcrypt.compare(password, user.password);
     if (!rightPassword) {
       const error = new Error("Wrong credentials");
-      error.code = 401;
+      error.code = 500;
       next(error);
     } else {
       const token = jwt.sign(
