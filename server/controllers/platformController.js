@@ -41,8 +41,28 @@ const editPlatform = async (req, res, next) => {
   }
 };
 
+const deletePlatform = async (req, res, next) => {
+  const { id } = req.params;
+  const { admin } = req.userData;
+  if (!admin) {
+    const error = new Error("You are not authorized to delete a platform.");
+    error.code = 401;
+    next(error);
+  } else {
+    const platform = await Platform.findByIdAndDelete(id);
+    if (!platform) {
+      const error = new Error("Platform not found.");
+      error.code = 404;
+      next(error);
+    } else {
+      res.status(200).json(platform);
+    }
+  }
+};
+
 module.exports = {
   getPlatforms,
   editPlatform,
   createPlatform,
+  deletePlatform,
 };
