@@ -12,6 +12,7 @@ const seriesSchema = new Schema({
   platform: {
     type: Types.ObjectId,
     ref: "Platform",
+    required: true,
   },
 });
 

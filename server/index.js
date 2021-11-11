@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const debug = require("debug")("series:server");
 const chalk = require("chalk");
+
 const usersRoutes = require("./routes/usersRoutes");
 const platformsRoutes = require("./routes/platformsRoutes");
 const {
