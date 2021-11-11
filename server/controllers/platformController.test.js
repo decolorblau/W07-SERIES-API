@@ -4,6 +4,7 @@ const {
   getPlatforms,
   createPlatform,
   editPlatform,
+  deletePlatform,
 } = require("./platformController");
 
 jest.mock("../../database/models/platform");
@@ -215,6 +216,75 @@ describe("Given the editPlatform function", () => {
 
       expect(next).toHaveBeenCalledWith(expectedError);
       expect(next.mock.calls[0][0].code).toBe(404);
+    });
+  });
+});
+
+describe("Given the deletePlatform function", () => {
+  describe("When it receives an not admin user and a next function", () => {
+    test("Then it should invoke the next function with a error", async () => {
+      const req = {
+        userData: {
+          username: "user",
+          password: "password",
+          admin: false,
+        },
+        params: {
+          id: 1,
+        },
+      };
+      const next = jest.fn();
+      const expectedError = new Error(
+        "You are not authorized to delete a platform."
+      );
+
+      await deletePlatform(req, null, next);
+
+      expect(next).toHaveBeenCalledWith(expectedError);
+    });
+  });
+
+  describe("When it receives an admin user, but a invalid ID", () => {
+    test("Then it should invoke the next function with a error", async () => {
+      const req = {
+        userData: {
+          username: "user",
+          password: "password",
+          admin: true,
+        },
+        params: {
+          id: 1,
+        },
+      };
+      const next = jest.fn();
+      const expectedError = new Error("Platform not found.");
+      Platform.findByIdAndDelete = jest.fn().mockResolvedValue(null);
+
+      await deletePlatform(req, null, next);
+
+      expect(next).toHaveBeenCalledWith(expectedError);
+    });
+  });
+
+  describe("When it receives an admin user with valid ID, a req and a res object", () => {
+    test.only("Then it should invoke the next function with a error", async () => {
+      const req = {
+        userData: {
+          username: "user",
+          password: "password",
+          admin: true,
+        },
+        params: {
+          id: 1,
+        },
+      };
+      const res = mockResponse();
+
+      Platform.findByIdAndDelete = jest.fn().mockResolvedValue("asd");
+
+      await deletePlatform(req, null, () => {});
+
+      // expect(next).toHaveBeenCalledWith(expectedError);
     });
   });
 });
