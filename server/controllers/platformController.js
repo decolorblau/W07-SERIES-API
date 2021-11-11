@@ -1,7 +1,7 @@
 const Platform = require("../../database/models/platform");
 
 const getPlatforms = async (req, res) => {
-  const platforms = await Platform.find({ user: req.userId });
+  const platforms = await Platform.find();
   res.json(platforms);
 };
 
@@ -31,7 +31,6 @@ const editPlatform = async (req, res, next) => {
     });
     console.log(!!platform);
     if (!platform) {
-      console.log("NULLLL");
       const error = new Error("Platform not found.");
       error.code = 404;
       next(error);
