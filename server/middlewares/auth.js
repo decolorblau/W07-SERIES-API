@@ -4,7 +4,7 @@ const checkAuthorization = (req, res, next) => {
   const authHeader = req.header("Authorization");
   if (!authHeader) {
     const error = new Error("Unauthorized.");
-    error.code = 401;
+    error.code = 402;
     next(error);
   } else {
     const token = authHeader.split(" ")[1];
@@ -19,6 +19,7 @@ const checkAuthorization = (req, res, next) => {
           process.env.JWT_SECRET
         );
         req.userData = { id, username, admin };
+
         next();
       } catch {
         const error = new Error("Unauthorized.");
