@@ -5,6 +5,9 @@ const platformSchema = new Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+  },
 });
 
 const Platform = model("Platform", platformSchema, "Platforms");
