@@ -24,7 +24,7 @@ const loginUser = async (req, res, next) => {
     const user = await User.findOne({ username });
     if (!user) {
       const error = new Error("Wrong credentials");
-      error.code = 401;
+      error.code = 500;
       next(error);
     } else {
       const rightPassword = await bcrypt.compare(password, user.password);

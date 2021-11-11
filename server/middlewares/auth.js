@@ -19,6 +19,7 @@ const checkAuthorization = (req, res, next) => {
           process.env.JWT_SECRET
         );
         req.userData = { id, username, admin };
+
         next();
       } catch {
         const error = new Error("Unauthorized.");
