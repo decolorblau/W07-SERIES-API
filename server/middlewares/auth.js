@@ -4,7 +4,7 @@ const checkAuthorization = (req, res, next) => {
   const authHeader = req.header("Authorization");
   if (!authHeader) {
     const error = new Error("Unauthorized.");
-    error.code = 402;
+    error.code = 401;
     next(error);
   } else {
     const token = authHeader.split(" ")[1];
@@ -23,7 +23,7 @@ const checkAuthorization = (req, res, next) => {
         next();
       } catch {
         const error = new Error("Unauthorized.");
-        error.code = 500;
+        error.code = 401;
         next(error);
       }
     }
