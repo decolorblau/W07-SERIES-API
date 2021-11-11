@@ -267,7 +267,7 @@ describe("Given the deletePlatform function", () => {
   });
 
   describe("When it receives an admin user with valid ID, a req and a res object", () => {
-    test.only("Then it should invoke the next function with a error", async () => {
+    test("Then it should invoke the json method with a ID", async () => {
       const req = {
         userData: {
           username: "user",
@@ -280,11 +280,11 @@ describe("Given the deletePlatform function", () => {
       };
       const res = mockResponse();
 
-      Platform.findByIdAndDelete = jest.fn().mockResolvedValue("asd");
+      Platform.findByIdAndDelete = jest.fn().mockResolvedValue(req.params);
 
-      await deletePlatform(req, null, () => {});
+      await deletePlatform(req, res, () => {});
 
-      // expect(next).toHaveBeenCalledWith(expectedError);
+      expect(res.json).toHaveBeenCalledWith({ id: req.params.id });
     });
   });
 });
